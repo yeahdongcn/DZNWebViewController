@@ -91,7 +91,7 @@
     self.view = self.webView;
     self.automaticallyAdjustsScrollViewInsets = YES;
     
-    [self setToolbarItems:self.navigationItems animated:NO];
+    [self setToolbarItems:self.navigationItems animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -335,16 +335,7 @@
 {
     UILabel *label = (UILabel *)self.navigationItem.titleView;
     
-    if (!label || ![label isKindOfClass:[UILabel class]]) {
-        label = [UILabel new];
-        label.numberOfLines = 2;
-        label.textAlignment = NSTextAlignmentCenter;
-        label.font = self.titleFont;
-        label.textColor = self.titleColor;
-        self.navigationItem.titleView = label;
-    }
-    
-    if (title) {
+    if (label && [label isKindOfClass:[UILabel class]] && title) {
         label.text = title;
         [label sizeToFit];
         
