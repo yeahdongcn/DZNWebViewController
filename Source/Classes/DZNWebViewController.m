@@ -333,16 +333,7 @@
 
 - (void)setViewTitle:(NSString *)title
 {
-    UILabel *label = (UILabel *)self.navigationItem.titleView;
-    
-    if (label && [label isKindOfClass:[UILabel class]] && title) {
-        label.text = title;
-        [label sizeToFit];
-        
-        CGRect frame = label.frame;
-        frame.size.height = self.navigationController.navigationBar.frame.size.height;
-        label.frame = frame;
-    }
+    self.navigationItem.title = title;
 }
 
 /*
