@@ -22,8 +22,6 @@
     NJKWebViewProgress *_progressProxy;
     
     int _loadBalance;
-    BOOL _didLoadContent;
-    BOOL _presentingActivities;
 }
 @property (nonatomic, strong) NJKWebViewProgressView *progressView;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
@@ -78,10 +76,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    if (!_didLoadContent) {
-        [self startRequestWithURL:_URL];
-    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -174,7 +168,7 @@
 
 - (NSURL *)URL
 {
-    return _webView.request.URL;
+    return _URL;
 }
 
 - (CGSize)HTLMWindowSize
@@ -217,7 +211,6 @@
 - (void)setLoadingError:(NSError *)error
 {
     switch (error.code) {
-//        case NSURLErrorTimedOut:
         case NSURLErrorUnknown:
         case NSURLErrorCancelled:
             return;
@@ -244,7 +237,6 @@
     else [_activityIndicatorView stopAnimating];
 }
 
-
 #pragma mark - DZNWebViewController methods
 
 - (void)startRequestWithURL:(NSURL *)URL
@@ -259,20 +251,6 @@
         NSString *HTMLString = [[NSString alloc] initWithData:data encoding:NSStringEncodingConversionAllowLossy];
         
         [_webView loadHTMLString:HTMLString baseURL:nil];
-    }
-}
-
-- (void)goBack:(id)sender
-{
-    if ([_webView canGoBack]) {
-        [_webView goBack];
-    }
-}
-
-- (void)goForward:(id)sender
-{
-    if ([_webView canGoForward]) {
-        [_webView goForward];
     }
 }
 
@@ -314,7 +292,7 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {    
-    if (request.URL && !_presentingActivities) {
+    if (request.URL) {
         return YES;
     }
     
@@ -337,7 +315,6 @@
     else if (_loadBalance < 0) _loadBalance = 0;
 
     if (_loadBalance == 0) {
-        _didLoadContent = YES;
         [self setActivityIndicatorsVisible:NO];
     }
     
@@ -360,7 +337,6 @@
 {
     [self.progressView setProgress:progress animated:YES];
 }
-
 
 #pragma mark - View lifeterm
 
