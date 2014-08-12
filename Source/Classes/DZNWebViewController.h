@@ -37,20 +37,14 @@ typedef NS_OPTIONS(NSUInteger, DZNWebViewControllerLoadingStyle) {
 /**
  * A very simple web browser with useful navigation and exportation tools.
  */
-@interface DZNWebViewController : UIViewController
+@interface DZNWebViewController : UIViewController <UIWebViewDelegate>
 
 /** The web view that the controller manages. */
 @property (nonatomic, strong) UIWebView *webView;
 /** The URL identifying the location of the content to load. */
-@property (nonatomic, readonly) NSURL *URL;
+@property (nonatomic, strong) NSURL *URL;
 /** The loading visual style, using a progress bar or a network activity indicator. Default is DZNWebViewControllerLoadingStyleProgressView. */
 @property (nonatomic) DZNWebViewControllerLoadingStyle loadingStyle;
-/** The supported actions like sharing and copy link, add to reading list, open in Safari, etc. Default is DZNWebViewControllerActionAll. */
-@property (nonatomic) DZNWebViewControllerActions supportedActions;
-/** The toolbar background color. Default is black, translucent. */
-@property (nonatomic, strong) UIColor *toolbarBackgroundColor;
-/** The toolbar item's tint color. Default is white. */
-@property (nonatomic, strong) UIColor *toolbarTintColor;
 /** The navigation bar's title font. Default uses UINavigation's appearance title text attributes with key NSFontAttributeName. */
 @property (nonatomic, strong) UIFont *titleFont;
 /** The navigation bar's title custom font. Default uses UINavigation's appearance title text attributes with key NSForegroundColorAttributeName. */
