@@ -65,7 +65,9 @@
     [super viewDidLoad];
 
     self.view = self.webView;
-    self.automaticallyAdjustsScrollViewInsets = YES;
+    if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
+        self.automaticallyAdjustsScrollViewInsets = YES;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
